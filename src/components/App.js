@@ -5,11 +5,17 @@ import Header from './Header'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Login from './Login'
 import Search from './Search'
+import styled from 'styled-components'
+
+const StyledApp = styled.div`
+  background: seashell;
+  height: 100%;
+`
 
 class App extends Component {
   render() {
     return (
-      <div className="center w85">
+      <StyledApp>
         <Header />
         <div className="ph3 pv1 background-gray">
           <Switch>
@@ -21,7 +27,7 @@ class App extends Component {
             <Route exact path="/new/:page" component={LinkList} />
           </Switch>
         </div>
-      </div>
+    </StyledApp>
     )
   }
 }

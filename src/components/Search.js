@@ -2,6 +2,21 @@ import React, { Component } from 'react'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import Link from './Link'
+import styled from 'styled-components'
+
+const StyledSeach = styled.div`
+  margin-bottom: 1rem;
+`
+
+const StyledInput = styled.input`
+  margin-bottom: 1rem;
+`
+
+const StyledButton = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: papayawhip;
+  border-radius: 0.5rem;
+`
 
 const FEED_SEARCH_QUERY = gql`
   query FeedSearchQuery($filter: String!) {
@@ -25,7 +40,6 @@ const FEED_SEARCH_QUERY = gql`
     }
   }
 `
-
 class Search extends Component {
   state = {
     links: [],
@@ -34,24 +48,24 @@ class Search extends Component {
 
   render() {
     return (
-      <div>
+      <StyledSeach>
         <div>
           Search
-          <input
+          <StyledInput
             type="text"
             onChange={e => this.setState({ filter: e.target.value })}
           />
-          <button onClick={() => this._executeSearch()}>OK</button>
+          <StyledButton onClick={() => this._executeSearch()}>OK</StyledButton>
         </div>
         {this.state.links.map((link, index) => (
           <Link key={link.id} link={link} index={index} />
         ))}
-      </div>
+       </StyledSeach>
     )
   }
 
   _executeSearch = async () => {
-    const { filter } = this.state
+    const {filter} = this.state
     const result = await this.props.client.query({
       query: FEED_SEARCH_QUERY,
       variables: { filter },

@@ -3,6 +3,29 @@ import { AUTH_TOKEN } from '../constants'
 import { timeDifferenceForDate } from '../utils'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import styled from 'styled-components'
+import {ArrowDropUp} from 'styled-icons/material'
+
+const StyledLink = styled.div`
+    font-size: 1.2rem;
+    background: white;
+`
+
+const StyledLinkNumber = styled.span`
+    font-size: 1.2rem;
+    background: white;
+`
+
+const StyledLinkDescription= styled.span`
+    font-size: 1.2rem;
+    background: white;
+`
+
+const StyledVoteButton = styled.button`
+    font-size: .75rem;
+    color: green;
+    border: 0;
+`
 
 const VOTE_MUTATION = gql`
   mutation VoteMutation($linkId: ID!) {
@@ -28,9 +51,9 @@ class Link extends Component {
     const authToken = localStorage.getItem(AUTH_TOKEN)
 
     return (
-      <div className="flex mt2 items-start">
+      <StyledLink>
         <div className="flex items-center">
-          <span className="gray">{this.props.index + 1}.</span>
+        <StyledLinkNumber>{this.props.index + 1}. </StyledLinkNumber>
           {authToken && (
             <Mutation
               mutation={VOTE_MUTATION}
@@ -40,14 +63,14 @@ class Link extends Component {
               }
             >
               {voteMutation => (
-                <div className="ml1 gray f11" onClick={voteMutation}>
-                  ▲
-                </div>
+                <StyledVoteButton onClick={voteMutation}>
+                  <ArrowDropUp size="34"/>
+                </StyledVoteButton>
               )}
             </Mutation>
           )}
         </div>
-        <div className="ml1">
+        <StyledLinkDescription>
           <div>
             {this.props.link.description} ({this.props.link.url})
           </div>
@@ -58,8 +81,8 @@ class Link extends Component {
               : 'Unknown'}{' '}
             {timeDifferenceForDate(this.props.link.createdAt)}
           </div>
-        </div>
-      </div>
+        </StyledLinkDescription>
+      </StyledLink>
     )
   }
 }

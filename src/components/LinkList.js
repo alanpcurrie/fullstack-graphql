@@ -1,8 +1,23 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import Link from './Link'
+import Loading from './Loading'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { LINKS_PER_PAGE } from '../constants'
+import styled from 'styled-components'
+
+const StyledLinkedList = styled.div`
+  color: rosybrown;
+`
+
+const StyledButton = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: papayawhip;
+  border-radius: 0.5rem;
+  &::before {
+    content: "${props => props.icon}";
+}
+`
 
 export const FEED_QUERY = gql`
   query FeedQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
@@ -158,7 +173,7 @@ class LinkList extends Component {
     return (
       <Query query={FEED_QUERY} variables={this._getQueryVariables()}>
         {({ loading, error, data, subscribeToMore }) => {
-          if (loading) return <div>Fetching</div>
+          if (loading) return <div><Loading/></div>
           if (error) return <div>Error</div>
 
           this._subscribeToNewLinks(subscribeToMore)
@@ -171,7 +186,7 @@ class LinkList extends Component {
             : 0
 
           return (
-            <Fragment>
+            <StyledLinkedList>
               {linksToRender.map((link, index) => (
                 <Link
                   key={link.id}
@@ -182,15 +197,15 @@ class LinkList extends Component {
               ))}
               {isNewPage && (
                 <div className="flex ml4 mv3 gray">
-                  <div className="pointer mr2" onClick={this._previousPage}>
+                  <StyledButton onClick={this._previousPage}>
                     Previous
-                  </div>
-                  <div className="pointer" onClick={() => this._nextPage(data)}>
+                  </StyledButton>
+                  <StyledButton onClick={() => this._nextPage(data)}>
                     Next
-                  </div>
+                  </StyledButton>
                 </div>
               )}
-            </Fragment>
+            </StyledLinkedList>
           )
         }}
       </Query>

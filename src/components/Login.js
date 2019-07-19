@@ -2,6 +2,26 @@ import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import styled from 'styled-components'
+
+const StyledLogin = styled.div`
+  background: rosybrown;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 25vw;
+`
+const StyledInput = styled.input`
+  margin-bottom: 1rem;
+`
+
+const StyledButton = styled.button`
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  background-color: papayawhip;
+  border-radius: 0.5rem;
+`
 
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!, $name: String!) {
@@ -30,50 +50,45 @@ class Login extends Component {
   render() {
     const { login, email, password, name } = this.state
     return (
-      <div>
+      <StyledLogin>
         <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
-        <div className="flex flex-column">
           {!login && (
-            <input
+            <StyledInput
               value={name}
               onChange={e => this.setState({ name: e.target.value })}
               type="text"
               placeholder="Your name"
             />
           )}
-          <input
+           <StyledInput
             value={email}
             onChange={e => this.setState({ email: e.target.value })}
             type="text"
             placeholder="Your email address"
           />
-          <input
+          <StyledInput
             value={password}
             onChange={e => this.setState({ password: e.target.value })}
             type="password"
             placeholder="Choose a safe password"
           />
-        </div>
-        <div className="flex mt3">
           <Mutation
             mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
             variables={{ email, password, name }}
             onCompleted={data => this._confirm(data)}
           >
             {mutation => (
-              <div className="pointer mr2 button" onClick={mutation}>
+              <StyledButton onClick={mutation}>
                 {login ? 'login' : 'create account'}
-              </div>
+              </StyledButton>
             )}
           </Mutation>
-          <div
-            className="pointer button"
+          <StyledButton
             onClick={() => this.setState({ login: !login })}
           >
             {login ? 'need to create an account?' : 'already have an account?'}
-          </div>
-        </div>
-      </div>
+          </StyledButton>
+      </StyledLogin>
     )
   }
 

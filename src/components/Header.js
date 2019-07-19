@@ -2,14 +2,32 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { AUTH_TOKEN } from '../constants'
+import styled from 'styled-components'
+import {AccountCircle} from 'styled-icons/material'
+
+const StyledHeader = styled.div`
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    background: #10ADED;
+      a {
+       color: red;
+     }
+`
+const StyledLogo = styled.span`
+    font-size: 1.2rem;
+`
+const StyledLogout = styled.span`
+    font-size: 1.2rem;
+`
 
 class Header extends Component {
   render() {
     const authToken = localStorage.getItem(AUTH_TOKEN)
     return (
-      <div className="flex pa1 justify-between nowrap orange">
+      <StyledHeader>
         <div className="flex flex-fixed black">
-          <div className="fw7 mr1">Hacker News</div>
+          <StyledLogo >Postify </StyledLogo>
           <Link to="/" className="ml1 no-underline black">
             new
           </Link>
@@ -39,15 +57,15 @@ class Header extends Component {
                 this.props.history.push(`/`)
               }}
             >
-              logout
+              <StyledLogout> <AccountCircle size="48"  />logout</StyledLogout>
             </div>
           ) : (
               <Link to="/login" className="ml1 no-underline black">
-                login
+                <AccountCircle size="48" />login
             </Link>
             )}
         </div>
-      </div>
+      </StyledHeader>
     )
   }
 }

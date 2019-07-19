@@ -1,43 +1,116 @@
-body {
+/*******************
+ Box Sizing
+ *******************/
+ html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/****************************
+ Generic Margins and Paddings
+ ****************************/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+p,
+pre,
+blockquote,
+figure,
+hr {
   margin: 0;
   padding: 0;
-  font-family: Verdana, Geneva, sans-serif;
 }
 
-input {
-  max-width: 500px;
+/*******************
+ Lists
+ *******************/
+ul {
+  list-style: none;
 }
 
-.gray {
-  color: #828282;
+/*******************
+ Forms and buttons
+ *******************/
+input,
+textarea,
+select,
+button {
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
 }
 
-.orange {
-  background-color: #ff6600;
+/* I usually expand input and textarea to full-width */
+input[type="text"],
+textarea {
+  width: 100%;
 }
 
-.background-gray {
-  background-color: rgb(246, 246, 239);
+/* More friendly border */
+input,
+textarea,
+button {
+  border: 1px solid gray;
 }
 
-.f11 {
-  font-size: 11px;
-}
-
-.w85 {
-  width: 85%;
-}
-
-.button {
-  font-family: monospace;
-  font-size: 10pt;
-  color: black;
-  background-color: buttonface;
-  text-align: center;
-  padding: 2px 6px 3px;
-  border-width: 2px;
-  border-style: outset;
-  border-color: buttonface;
+/* Some defaults for one-liner buttons */
+button {
   cursor: pointer;
-  max-width: 250px;
+  padding: 0.75em 1em;
+  border-radius: 0;
+  line-height: 1;
+  background-color: transparent;
+}
+
+button * {
+  pointer-events: none;
+}
+
+/***********************************
+ Easy responsive for media elements
+ ***********************************/
+img,
+svg,
+iframe,
+video,
+object,
+embed {
+  display: block;
+  max-width: 100%;
+}
+
+/*******************
+ Useful table styles
+ *******************/
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/*******************
+ The hidden attribute
+ *******************/
+[hidden] {
+  display: none !important;
+}
+
+/*******************
+ Noscript
+ *******************/
+noscript {
+  display: block;
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
